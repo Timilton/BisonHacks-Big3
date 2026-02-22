@@ -219,7 +219,7 @@ export const LandingPage: React.FC = () => {
       {/* Footer */}
       <footer id="contact" className="border-t border-[rgba(255,255,255,0.08)] mt-20 py-8">
         <div className="max-w-7xl mx-auto px-6 md:px-8 text-center text-[#B6C2D6]">
-          <p>© 2024 SkillSprint. Turning learning into opportunities.</p>
+          <p>© 2026 Byte3. Turning learning into opportunities.</p>
         </div>
       </footer>
     </div>
