@@ -87,7 +87,7 @@ src/
 
 ## Demo Data
 
-All data is hardcoded and includes:
+Data includes
 
 - **10 AWS Tracks** with 5 stages each
 - **25 Mock Learners** with different skill levels and progress
