@@ -22,11 +22,11 @@ export const Header: React.FC = () => {
         <div className="flex items-center gap-6">
           {/* Role Selector */}
           <div className="flex items-center gap-2">
-            <span className="text-xs text-gray-500 uppercase tracking-widest">Role:</span>
+            <span className="text-xs text-[#B6C2D6] uppercase tracking-widest">Role:</span>
             <select
               value={role}
               onChange={(e) => setRole(e.target.value as 'learner' | 'company')}
-              className="appearance-none bg-white border border-[#EDEDED] rounded px-3 py-2 text-sm text-[#0A0A0A] hover:border-[#FF1A1A] cursor-pointer focus:outline-none focus:border-[#FF1A1A]"
+              className="appearance-none bg-[#0F274A] border border-[rgba(255,255,255,0.08)] rounded px-3 py-2 text-sm text-[#F8FAFC] hover:border-[#4DA3FF] cursor-pointer focus:outline-none focus:border-[#4DA3FF]"
             >
               <option value="learner">Learner</option>
               <option value="company">Company</option>
@@ -36,26 +36,26 @@ export const Header: React.FC = () => {
           {/* Learner/Company Selector */}
           {role === 'learner' ? (
             <div className="flex items-center gap-2">
-              <span className="text-xs text-gray-500 uppercase tracking-widest">Learner:</span>
+              <span className="text-xs text-[#B6C2D6] uppercase tracking-widest">Learner:</span>
               <select
                 value={selectedLearnerId}
                 onChange={(e) => setSelectedLearnerId(e.target.value)}
-                className="appearance-none bg-white border border-[#EDEDED] rounded px-3 py-2 text-sm text-[#0A0A0A] hover:border-[#FF1A1A] cursor-pointer focus:outline-none focus:border-[#FF1A1A]"
+                className="appearance-none bg-[#0F274A] border border-[rgba(255,255,255,0.08)] rounded px-3 py-2 text-sm text-[#F8FAFC] hover:border-[#4DA3FF] cursor-pointer focus:outline-none focus:border-[#4DA3FF]"
               >
                 {learnersOptions.map((learner) => (
                   <option key={learner.id} value={learner.id}>
-                    {learner.name} {learner.isPremium ? '(Premium)' : '(Free)'}
+                    {learner.name}
                   </option>
                 ))}
               </select>
             </div>
           ) : (
             <div className="flex items-center gap-2">
-              <span className="text-xs text-gray-500 uppercase tracking-widest">Company:</span>
+              <span className="text-xs text-[#B6C2D6] uppercase tracking-widest">Company:</span>
               <select
                 value={selectedCompanyId}
                 onChange={(e) => setSelectedCompanyId(e.target.value)}
-                className="appearance-none bg-white border border-[#EDEDED] rounded px-3 py-2 text-sm text-[#0A0A0A] hover:border-[#FF1A1A] cursor-pointer focus:outline-none focus:border-[#FF1A1A]"
+                className="appearance-none bg-[#0F274A] border border-[rgba(255,255,255,0.08)] rounded px-3 py-2 text-sm text-[#F8FAFC] hover:border-[#4DA3FF] cursor-pointer focus:outline-none focus:border-[#4DA3FF]"
               >
                 {companies.map((company) => (
                   <option key={company.id} value={company.id}>

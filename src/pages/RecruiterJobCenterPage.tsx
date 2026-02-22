@@ -5,9 +5,11 @@ import { useDemoStore } from '../store/DemoStore';
 import { useAppContext } from '../store/AppContext';
 
 export const RecruiterJobCenterPage: React.FC = () => {
-  const { jobs, learners, getLearnerAllSkills, getLearnerAvgScore } = useDemoStore();
+  const { jobs, learners, getLearnerAllSkills, getLearnerAvgScore, requestOutreach } = useDemoStore();
   const { selectedCompanyId } = useAppContext();
   const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
+  const [outreachLoading, setOutreachLoading] = useState<string | null>(null);
+  const [outreachSent, setOutreachSent] = useState<Set<string>>(new Set());
 
   // Get jobs for this company
   const companyJobs = useMemo(
@@ -27,7 +29,8 @@ export const RecruiterJobCenterPage: React.FC = () => {
         const skillMatch = job.requiredSkills.filter((skill) => allSkills.includes(skill)).length;
         const matchPercentage = (skillMatch / job.requiredSkills.length) * 100;
         
-        return avgScore >= job.minAvgScore && matchPercentage >= 75;
+        // Candidates must meet minimum score and have at least 50% skill match
+        return avgScore >= job.minAvgScore && matchPercentage >= 50;
       })
       .map((learner) => {
         const allSkills = getLearnerAllSkills(learner.id);
@@ -46,6 +49,31 @@ export const RecruiterJobCenterPage: React.FC = () => {
 
   const selectedJob = jobs.find((j) => j.id === selectedJobId);
   const eligibleCandidates = selectedJobId ? getEligibleCandidates(selectedJobId) : [];
+
+  const handleSendOutreach = (learner: any, job: any) => {
+    const outreachKey = `${job.id}-${learner.id}`;
+    setOutreachLoading(outreachKey);
+    
+    // Simulate API call
+    setTimeout(() => {
+      const company = learners.find((l) => l.id === selectedCompanyId)?.name || 'Amazon';
+      const message = `Hi ${learner.name}, we're interested in discussing a ${job.title} opportunity with you based on your AWS track progress and skills. Your profile matches our requirements perfectly. Let's talk!`;
+      
+      requestOutreach(selectedCompanyId, learner.id, message);
+      
+      setOutreachSent((prev) => new Set([...prev, outreachKey]));
+      setOutreachLoading(null);
+      
+      // Reset after 2 seconds
+      setTimeout(() => {
+        setOutreachSent((prev) => {
+          const newSet = new Set(prev);
+          newSet.delete(outreachKey);
+          return newSet;
+        });
+      }, 2000);
+    }, 500);
+  };
 
   return (
     <div className="p-6 md:p-8">
@@ -198,9 +226,19 @@ export const RecruiterJobCenterPage: React.FC = () => {
                         <motion.button
                           whileHover={{ scale: 1.02 }}
                           whileTap={{ scale: 0.98 }}
-                          className="w-full mt-3 px-3 py-2 bg-[#22C55E] text-[#0B1E3B] rounded-lg font-semibold hover:bg-[#16A34A] transition text-sm"
+                          onClick={() => handleSendOutreach(candidate.learner, selectedJob)}
+                          disabled={outreachLoading === `${selectedJob.id}-${candidate.learner.id}` || outreachSent.has(`${selectedJob.id}-${candidate.learner.id}`)}
+                          className={`w-full mt-3 px-3 py-2 rounded-lg font-semibold transition text-sm ${
+                            outreachSent.has(`${selectedJob.id}-${candidate.learner.id}`)
+                              ? 'bg-emerald-600 text-white'
+                              : 'bg-[#22C55E] text-[#0B1E3B] hover:bg-[#16A34A]'
+                          } disabled:opacity-50`}
                         >
-                          Send Outreach
+                          {outreachLoading === `${selectedJob.id}-${candidate.learner.id}`
+                            ? 'Sending...'
+                            : outreachSent.has(`${selectedJob.id}-${candidate.learner.id}`)
+                              ? '✅ Sent to Inbox'
+                              : 'Send Outreach'}
                         </motion.button>
                       </motion.div>
                     ))

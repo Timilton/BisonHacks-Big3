@@ -117,7 +117,7 @@ export const CompanyDashboardPage: React.FC = () => {
                         <td className="px-6 py-4">
                           <div>
                             <p className="font-semibold text-[#0A0A0A]">{learner?.name}</p>
-                            <p className="text-sm text-gray-600">{learner?.isPremium ? 'Premium' : 'Free'}</p>
+                            <p className="text-sm text-gray-600">{learner?.email}</p>
                           </div>
                         </td>
                         <td className="px-6 py-4">

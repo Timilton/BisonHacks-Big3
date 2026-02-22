@@ -20,8 +20,8 @@ export const LearnerTracksPage: React.FC = () => {
   return (
     <div className="p-8">
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-        <h1 className="text-4xl font-bold text-[#0A0A0A] mb-2">Available Tracks</h1>
-        <p className="text-gray-600 mb-8">Build your skills with AWS Cloud Developer track</p>
+        <h1 className="text-4xl font-bold text-[#F8FAFC] mb-2">Available Tracks</h1>
+        <p className="text-[#B6C2D6] mb-8">Build your skills with AWS Cloud Developer track</p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {tracks.map((track) => {
@@ -35,29 +35,29 @@ export const LearnerTracksPage: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
                 viewport={{ once: true }}
-                className="border border-[#EDEDED] rounded-lg p-6 hover:shadow-lg transition-all"
+                className="bg-[#0F274A] border border-[rgba(255,255,255,0.08)] rounded-lg p-6 hover:border-[#4DA3FF]/50 transition-all"
               >
                 <div className="flex items-start justify-between mb-4">
                   <div>
-                    <h3 className="text-2xl font-bold text-[#0A0A0A]">{track.name}</h3>
-                    <p className="text-sm text-[#FF1A1A] font-semibold mt-1">AWS</p>
+                    <h3 className="text-2xl font-bold text-[#F8FAFC]">{track.name}</h3>
+                    <p className="text-sm text-[#4DA3FF] font-semibold mt-1">AWS</p>
                   </div>
-                  {isEnrolled && <CheckCircle className="w-6 h-6 text-green-600" />}
+                  {isEnrolled && <CheckCircle className="w-6 h-6 text-emerald-500" />}
                 </div>
 
-                <p className="text-gray-700 mb-6">{track.description}</p>
+                <p className="text-[#B6C2D6] mb-6">{track.description}</p>
 
                 <div className="mb-6">
-                  <div className="text-sm text-gray-600 mb-2">5 Stages • 10-20 Hours</div>
+                  <div className="text-sm text-[#B6C2D6] mb-2">5 Stages • 10-20 Hours</div>
                   {isEnrolled && enrollment && (
                     <div className="flex items-center gap-2">
-                      <div className="flex-1 bg-[#EDEDED] rounded-full h-2">
+                      <div className="flex-1 bg-[#0B1E3B] rounded-full h-2">
                         <div
-                          className="bg-[#FF1A1A] h-2 rounded-full transition-all"
+                          className="bg-[#4DA3FF] h-2 rounded-full transition-all"
                           style={{ width: `${enrollment.progressPct}%` }}
                         />
                       </div>
-                      <span className="text-sm font-semibold text-[#0A0A0A]">{enrollment.progressPct}%</span>
+                      <span className="text-sm font-semibold text-[#F8FAFC]">{enrollment.progressPct}%</span>
                     </div>
                   )}
                 </div>
@@ -68,8 +68,8 @@ export const LearnerTracksPage: React.FC = () => {
                   onClick={() => handleStartTrack(track.id)}
                   className={`w-full py-3 rounded-lg font-semibold flex items-center justify-center gap-2 transition-all ${
                     isEnrolled
-                      ? 'bg-white border-2 border-[#FF1A1A] text-[#FF1A1A] hover:bg-[#FF1A1A] hover:text-white'
-                      : 'bg-[#FF1A1A] text-white hover:bg-[#D60000]'
+                      ? 'bg-[#0B1E3B] border-2 border-[#4DA3FF] text-[#4DA3FF] hover:bg-[#4DA3FF] hover:text-[#0B1E3B]'
+                      : 'bg-[#4DA3FF] text-[#0B1E3B] hover:bg-[#5FB0FF]'
                   }`}
                 >
                   {isEnrolled ? (

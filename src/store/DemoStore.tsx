@@ -36,6 +36,7 @@ export interface Stage {
   courseIds: string[];
   skillsAwarded: string[];
   salaryRange: string;
+  certificationName?: string; // e.g., "AWS Cloud Practitioner"
 }
 
 export interface Track {
@@ -242,6 +243,19 @@ const DEMO_TRACKS: Track[] = [
 ];
 
 const DEMO_STAGES: Stage[] = [];
+const certNames = [
+  ['AWS Cloud Practitioner', 'AWS Solutions Architect Associate', 'AWS Solutions Architect Professional', 'AWS Security Specialty', 'AWS Advanced Security Specialty'],
+  ['Google Cloud Fundamentals', 'Google Cloud Associate', 'Google Cloud Professional', 'Google Cloud Security Expert', 'Google Cloud Master'],
+  ['Azure Fundamentals', 'Azure Administrator', 'Azure Solutions Architect', 'Azure Security Engineer', 'Azure Solutions Architect Expert'],
+  ['Kubernetes Fundamentals', 'Kubernetes Application Developer', 'Kubernetes Administrator', 'Kubernetes Security Expert', 'Kubernetes Master'],
+  ['DevOps Fundamentals', 'DevOps Engineer Associate', 'DevOps Engineer Professional', 'DevOps Lead', 'DevOps Architect'],
+  ['Cloud Data Fundamentals', 'Cloud Data Associate', 'Cloud Data Professional', 'Cloud Data Architect', 'Cloud Data Master'],
+  ['Container Fundamentals', 'Container Developer', 'Container Administrator', 'Container Architect', 'Container Expert'],
+  ['Infrastructure Fundamentals', 'Infrastructure Associate', 'Infrastructure Professional', 'Infrastructure Architect', 'Infrastructure Master'],
+  ['Cloud Security Fundamentals', 'Cloud Security Associate', 'Cloud Security Professional', 'Cloud Security Architect', 'Cloud Security Expert'],
+  ['Cloud ML Fundamentals', 'Cloud ML Associate', 'Cloud ML Professional', 'Cloud ML Architect', 'Cloud ML Master'],
+];
+
 for (let t = 1; t <= 10; t++) {
   for (let s = 1; s <= 5; s++) {
     const stageId = `stage-${t}-${s}`;
@@ -258,11 +272,12 @@ for (let t = 1; t <= 10; t++) {
       id: stageId,
       trackId: `track-${t}`,
       stageNum: s,
-      title: `Stage ${s}: ${['Fundamentals', 'Core Skills', 'Advanced Topics', 'Expert Implementation', 'Mastery'][s - 1]}`,
+      title: `${['Fundamentals', 'Core Skills', 'Advanced Topics', 'Expert Implementation', 'Mastery'][s - 1]}`,
       description: `Learn and master stage ${s} concepts and practices for this track`,
       courseIds,
       skillsAwarded: skillSamples.slice(0, s),
       salaryRange,
+      certificationName: certNames[t - 1][s - 1],
     });
   }
 }
@@ -273,7 +288,7 @@ const DEMO_JOBS: Job[] = [
     title: 'Senior Cloud Architect',
     company: 'Amazon',
     description: 'Design and implement cloud solutions for enterprise AWS clients',
-    requiredSkills: ['Cloud Concepts', 'Architecture', 'AWS Basics'],
+    requiredSkills: ['Cloud Concepts', 'Architecture', 'Cloud Fundamentals'],
     minAvgScore: 88,
     estimatedSalary: '$150,000 - $180,000',
   },
@@ -282,7 +297,7 @@ const DEMO_JOBS: Job[] = [
     title: 'AWS DevOps Engineer',
     company: 'Amazon',
     description: 'Build and maintain CI/CD infrastructure using AWS services',
-    requiredSkills: ['CI/CD', 'DevOps', 'Docker', 'Kubernetes'],
+    requiredSkills: ['CI/CD', 'DevOps', 'Docker'],
     minAvgScore: 85,
     estimatedSalary: '$130,000 - $160,000',
   },
@@ -383,15 +398,15 @@ const DEMO_LEARNERS: Learner[] = [
     email: 'maya@email.com',
     isPremium: false,
     resume: {
-      summary: 'Recent computer science graduate, seeking first role in cloud infrastructure.',
+      summary: 'Recent computer science graduate, seeking first role in cloud infrastructure. Strong foundation in cloud concepts and DevOps.',
       education: ['BS Computer Science, MIT'],
-      experience: ['Intern at DataCorp - Data pipeline projects'],
-      projects: ['College thesis: Distributed systems design'],
-      skills: ['Java', 'Python', 'Linux'],
+      experience: ['Intern at DataCorp - Cloud infrastructure and data pipeline projects', 'DevOps Engineering Intern'],
+      projects: ['College thesis: Distributed systems design', 'AWS cloud migration project'],
+      skills: ['Java', 'Python', 'Linux', 'Cloud Concepts', 'Architecture', 'Docker', 'Kubernetes', 'CI/CD', 'DevOps'],
     },
-    baseSkills: ['Java', 'Python', 'Linux', 'Databases'],
+    baseSkills: ['Java', 'Python', 'Linux', 'Databases', 'Cloud Concepts', 'Architecture', 'Docker', 'Kubernetes', 'CI/CD', 'DevOps'],
     createdAt: new Date(Date.now() - 120 * 24 * 60 * 60 * 1000).toISOString(),
-    lastActivityAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+    lastActivityAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
   },
   {
     id: 'learner-3',
@@ -821,11 +836,22 @@ export const DemoStoreProvider: React.FC<{ children: React.ReactNode }> = ({ chi
       learnerId: 'learner-2',
       companyId: 'aws',
       trackId: 'track-1',
-      stageNum: 2,
+      stageNum: 3,
       status: 'ACTIVE',
-      progressPct: 40,
+      progressPct: 60,
       lastActivityISO: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
-      recruiterVisible: false,
+      recruiterVisible: true,
+    },
+    {
+      id: 'enroll-alex-1',
+      learnerId: 'learner-1',
+      companyId: 'aws',
+      trackId: 'track-1',
+      stageNum: 4,
+      status: 'ACTIVE',
+      progressPct: 80,
+      lastActivityISO: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+      recruiterVisible: true,
     },
     {
       id: 'enroll-2',
@@ -853,19 +879,120 @@ export const DemoStoreProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   const [checkIns, setCheckIns] = useState<CheckIn[]>([]);
   const [outreachMessages, setOutreachMessages] = useState<OutreachMessage[]>([]);
   const [courseCompletions, setCourseCompletions] = useState<CourseCompletion[]>([
+    // Maya's completions (learner-2) - avg score 88
+    {
+      id: 'comp-maya-1',
+      learnerId: 'learner-2',
+      courseId: 'c-1',
+      score: 90,
+      completedAt: new Date(Date.now() - 20 * 24 * 60 * 60 * 1000).toISOString(),
+    },
+    {
+      id: 'comp-maya-2',
+      learnerId: 'learner-2',
+      courseId: 'c-2',
+      score: 87,
+      completedAt: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000).toISOString(),
+    },
+    {
+      id: 'comp-maya-3',
+      learnerId: 'learner-2',
+      courseId: 'c-5',
+      score: 85,
+      completedAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
+    },
+    {
+      id: 'comp-maya-4',
+      learnerId: 'learner-2',
+      courseId: 'c-19',
+      score: 88,
+      completedAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+    },
+    // Alex's completions (learner-1) - completed track-2, stage 5
     {
       id: 'comp-1',
       learnerId: 'learner-1',
       courseId: 'c-1',
       score: 92,
-      completedAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
+      completedAt: new Date(Date.now() - 45 * 24 * 60 * 60 * 1000).toISOString(),
     },
     {
       id: 'comp-2',
       learnerId: 'learner-1',
       courseId: 'c-2',
       score: 88,
+      completedAt: new Date(Date.now() - 40 * 24 * 60 * 60 * 1000).toISOString(),
+    },
+    {
+      id: 'comp-3',
+      learnerId: 'learner-1',
+      courseId: 'c-3',
+      score: 91,
+      completedAt: new Date(Date.now() - 35 * 24 * 60 * 60 * 1000).toISOString(),
+    },
+    {
+      id: 'comp-alex-4',
+      learnerId: 'learner-1',
+      courseId: 'c-4',
+      score: 89,
+      completedAt: new Date(Date.now() - 28 * 24 * 60 * 60 * 1000).toISOString(),
+    },
+    {
+      id: 'comp-alex-5',
+      learnerId: 'learner-1',
+      courseId: 'c-5',
+      score: 90,
+      completedAt: new Date(Date.now() - 22 * 24 * 60 * 60 * 1000).toISOString(),
+    },
+    {
+      id: 'comp-alex-6',
+      learnerId: 'learner-1',
+      courseId: 'c-6',
+      score: 87,
+      completedAt: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000).toISOString(),
+    },
+    {
+      id: 'comp-alex-7',
+      learnerId: 'learner-1',
+      courseId: 'c-7',
+      score: 93,
+      completedAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
+    },
+    {
+      id: 'comp-alex-8',
+      learnerId: 'learner-1',
+      courseId: 'c-8',
+      score: 92,
       completedAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+    },
+    {
+      id: 'comp-alex-9',
+      learnerId: 'learner-1',
+      courseId: 'c-9',
+      score: 94,
+      completedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+    },
+    // James Park completions (learner-3) - DevOps focus
+    {
+      id: 'comp-4',
+      learnerId: 'learner-3',
+      courseId: 'c-19',
+      score: 85,
+      completedAt: new Date(Date.now() - 18 * 24 * 60 * 60 * 1000).toISOString(),
+    },
+    {
+      id: 'comp-5',
+      learnerId: 'learner-3',
+      courseId: 'c-22',
+      score: 87,
+      completedAt: new Date(Date.now() - 8 * 24 * 60 * 60 * 1000).toISOString(),
+    },
+    {
+      id: 'comp-6',
+      learnerId: 'learner-3',
+      courseId: 'c-20',
+      score: 86,
+      completedAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
     },
   ]);
 

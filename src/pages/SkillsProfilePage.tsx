@@ -114,10 +114,7 @@ export const SkillsProfilePage: React.FC = () => {
             </div>
 
             {/* Membership */}
-            <div className="bg-[#0F274A] rounded-lg p-6 border border-[rgba(255,255,255,0.08)]">
-              <p className="text-sm text-[#B6C2D6] mb-2">Membership</p>
-              <p className="text-lg font-bold text-[#F8FAFC]">{learner.isPremium ? '⭐ Premium' : 'Free'}</p>
-            </div>
+            {/* Removed: Premium feature not included */}
 
             {/* Track Progress */}
             {enrollments.length > 0 && (

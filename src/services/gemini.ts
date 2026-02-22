@@ -1,7 +1,7 @@
 // Gemini AI Service for SkillSprint
 // Handles AI-powered mentoring and recommendations with rate limiting
 
-const API_KEY = (import.meta as any).env?.VITE_GEMINI_API_KEY || '';
+const API_KEY = (import.meta as any).env?.VITE_GEMINI_API_KEY || 'AIzaSyDc0Z3D2cn7TJos0MVhQfWyCGZyrJUy_wQ';
 const RATE_LIMIT_PER_DAY = 5;
 const STORAGE_KEY_PREFIX = 'skillsprint_gemini_';
 
