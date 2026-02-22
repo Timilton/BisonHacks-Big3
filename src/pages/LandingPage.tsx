@@ -1,227 +1,226 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, Zap, Users, TrendingUp, Trophy } from 'lucide-react';
+import { ArrowRight, Zap, Users, BookOpen, Briefcase } from 'lucide-react';
 
 export const LandingPage: React.FC = () => {
+  const navigate = useNavigate();
+
+  const handleLogin = () => {
+    navigate('/login');
+  };
+
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    element?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
-    <div className="min-h-screen bg-[#0b0f19]">
-      {/* Navigation */}
-      <nav className="flex items-center justify-between px-8 py-6 border-b border-white/10">
-        <div className="flex items-center gap-2">
-          <Trophy className="w-8 h-8 text-cyan-400" />
-          <span className="font-bold text-xl text-gradient">CertiROI</span>
-        </div>
-        <div className="hidden md:flex items-center gap-8">
-          <Link to="#" className="text-gray-300 hover:text-cyan-400 transition">
-            Product
-          </Link>
-          <Link to="#" className="text-gray-300 hover:text-cyan-400 transition">
-            For Providers
-          </Link>
-          <Link to="#" className="text-gray-300 hover:text-cyan-400 transition">
-            Pricing
-          </Link>
+    <div className="min-h-screen bg-[#0B1E3B]">
+      {/* Navigation Header */}
+      <nav className="fixed top-0 w-full z-50 bg-[#0B1E3B]/95 backdrop-blur border-b border-[rgba(255,255,255,0.08)]">
+        <div className="max-w-7xl mx-auto px-6 md:px-8 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <img src="/logo_skill_sprint.png" alt="SkillSprint Logo" className="w-8 h-8" />
+            <span className="font-bold text-xl text-[#F8FAFC]">SkillSprint</span>
+          </div>
+
+          <div className="hidden md:flex items-center gap-8">
+            <button onClick={() => scrollToSection('features')} className="text-[#B6C2D6] hover:text-[#F8FAFC] transition">Pricing</button>
+            <button onClick={() => scrollToSection('solutions')} className="text-[#B6C2D6] hover:text-[#F8FAFC] transition">Solutions</button>
+            <button onClick={() => scrollToSection('contact')} className="text-[#B6C2D6] hover:text-[#F8FAFC] transition">Contact</button>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <button onClick={handleLogin} className="px-4 py-2 text-[#F8FAFC] hover:text-[#4DA3FF] transition text-sm">
+              Log In
+            </button>
+            <button onClick={handleLogin} className="px-4 py-2 bg-[#4DA3FF] text-[#0B1E3B] rounded-lg font-medium hover:bg-[#3d8ae6] transition text-sm">
+              Create Account
+            </button>
+          </div>
         </div>
       </nav>
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden px-8 py-20 md:py-32">
-        <div className="max-w-6xl mx-auto">
+      <section className="max-w-7xl mx-auto px-6 md:px-8 pt-32 pb-20 text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 text-[#F8FAFC]">
+            Become unreplaceable by learning high demand skills.<br />
+            <span className="bg-gradient-to-r from-[#4DA3FF] to-[#22C55E] bg-clip-text text-transparent">
+              Get Recruiter Visibility while at it.
+            </span>
+          </h1>
+          <p className="text-xl text-[#B6C2D6] max-w-2xl mx-auto mb-8">
+            SkillSprint turns your learning journey into job opportunities. Master cloud technologies through structured tracks, showcase your skills, and connect directly with hiring managers.
+          </p>
+
+          {/* CTA Buttons */}
+          <div className="flex flex-col md:flex-row gap-4 justify-center mb-16">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={handleLogin}
+              className="px-8 py-4 bg-[#4DA3FF] text-[#0B1E3B] rounded-lg font-semibold hover:bg-[#3d8ae6] transition flex items-center justify-center gap-2"
+            >
+              Enter Demo <ArrowRight size={20} />
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={handleLogin}
+              className="px-8 py-4 border border-[#4DA3FF] text-[#4DA3FF] rounded-lg font-semibold hover:bg-[#4DA3FF]/10 transition"
+            >
+              Try Recruiter Portal
+            </motion.button>
+          </div>
+
+          {/* Stats */}
+          <div className="grid md:grid-cols-3 gap-8 mb-16">
+            <div className="rounded-lg bg-[#0F274A] p-6 border border-[rgba(255,255,255,0.08)]">
+              <div className="text-3xl font-bold text-[#4DA3FF] mb-2">30+</div>
+              <div className="text-[#B6C2D6]">Curated Courses</div>
+            </div>
+            <div className="rounded-lg bg-[#0F274A] p-6 border border-[rgba(255,255,255,0.08)]">
+              <div className="text-3xl font-bold text-[#22C55E] mb-2">10</div>
+              <div className="text-[#B6C2D6]">Learning Tracks</div>
+            </div>
+            <div className="rounded-lg bg-[#0F274A] p-6 border border-[rgba(255,255,255,0.08)]">
+              <div className="text-3xl font-bold text-[#F8FAFC] mb-2">25+</div>
+              <div className="text-[#B6C2D6]">Active Learners</div>
+            </div>
+          </div>
+        </motion.div>
+      </section>
+
+      {/* Features Section */}
+      <section id="features" className="max-w-7xl mx-auto px-6 md:px-8 py-20 border-t border-[rgba(255,255,255,0.08)]">
+        <h2 className="text-4xl font-bold text-[#F8FAFC] mb-16 text-center">For Learners</h2>
+        <div className="grid md:grid-cols-3 gap-8 mb-20">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center"
+            whileHover={{ y: -5 }}
+            className="bg-[#0F274A] rounded-lg p-8 border border-[rgba(255,255,255,0.08)]"
           >
-            <h1 className="text-5xl md:text-7xl font-bold mb-6">
-              <span className="text-gradient">Turn Certifications</span>
-              <br />
-              Into Clear Career ROI
-            </h1>
-            <p className="text-xl text-gray-400 max-w-3xl mx-auto mb-12">
-              Show learners exactly what each certification stage unlocks in salary, demand, and recruiter visibility. The industry's first B2B platform for certification providers.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-              <Link to="/provider/dashboard">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="px-8 py-4 rounded-lg bg-gradient-to-r from-cyan-500 to-indigo-500 text-white font-bold flex items-center gap-2 hover:shadow-lg hover:shadow-cyan-500/50 transition-all"
-                >
-                  View Provider Demo <ArrowRight className="w-5 h-5" />
-                </motion.button>
-              </Link>
-              <Link to="/provider/pathways">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="px-8 py-4 rounded-lg glass-effect text-white font-bold flex items-center gap-2 hover:bg-white/20 transition-all"
-                >
-                  See AWS Example <ArrowRight className="w-5 h-5" />
-                </motion.button>
-              </Link>
-            </div>
-
-            {/* Stats */}
-            <div className="grid grid-cols-3 gap-4 max-w-2xl mx-auto mb-16">
-              <div className="glass-effect p-6 rounded-lg">
-                <p className="text-3xl font-bold text-emerald-400 mb-2">1,245</p>
-                <p className="text-sm text-gray-400">Certified Candidates</p>
-              </div>
-              <div className="glass-effect p-6 rounded-lg">
-                <p className="text-3xl font-bold text-cyan-400 mb-2">38%</p>
-                <p className="text-sm text-gray-400">Avg Salary Increase</p>
-              </div>
-              <div className="glass-effect p-6 rounded-lg">
-                <p className="text-3xl font-bold text-violet-400 mb-2">74%</p>
-                <p className="text-sm text-gray-400">Job Placement Rate</p>
-              </div>
-            </div>
+            <BookOpen className="text-[#4DA3FF] mb-4" size={32} />
+            <h3 className="text-xl font-semibold text-[#F8FAFC] mb-3">Structured Learning</h3>
+            <p className="text-[#B6C2D6]">Master technical skills through multi-stage tracks with carefully curated courses and real-world projects.</p>
           </motion.div>
+
+          <motion.div
+            whileHover={{ y: -5 }}
+            className="bg-[#0F274A] rounded-lg p-8 border border-[rgba(255,255,255,0.08)]"
+          >
+            <Zap className="text-[#22C55E] mb-4" size={32} />
+            <h3 className="text-xl font-semibold text-[#F8FAFC] mb-3">AI Mentoring</h3>
+            <p className="text-[#B6C2D6]">Get personalized guidance from Gemini AI-powered mentor to accelerate your learning and stay motivated.</p>
+          </motion.div>
+
+          <motion.div
+            whileHover={{ y: -5 }}
+            className="bg-[#0F274A] rounded-lg p-8 border border-[rgba(255,255,255,0.08)]"
+          >
+            <Briefcase className="text-[#FF6B6B] mb-4" size={32} />
+            <h3 className="text-xl font-semibold text-[#F8FAFC] mb-3">Job Matching</h3>
+            <p className="text-[#B6C2D6]">Reach a high level and become visible to recruiters. Get matched with opportunities aligned with your skills.</p>
+          </motion.div>
+        </div>
+
+        <div className="text-center">
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={handleLogin}
+            className="px-8 py-3 bg-[#4DA3FF] text-[#0B1E3B] rounded-lg font-semibold hover:bg-[#3d8ae6] transition"
+          >
+            Start Learning → 
+          </motion.button>
         </div>
       </section>
 
-      {/* The Problem Section */}
-      <section className="px-8 py-20 border-t border-white/10">
-        <div className="max-w-5xl mx-auto">
+      {/* For Recruiters Section */}
+      <section id="solutions" className="max-w-7xl mx-auto px-6 md:px-8 py-20 border-t border-[rgba(255,255,255,0.08)]">
+        <h2 className="text-4xl font-bold text-[#F8FAFC] mb-16 text-center">For Recruiters</h2>
+        <div className="grid md:grid-cols-2 gap-8 mb-20">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
+            whileHover={{ y: -5 }}
+            className="bg-[#0F274A] rounded-lg p-8 border border-[rgba(255,255,255,0.08)]"
           >
-            <h2 className="text-4xl font-bold mb-4">
-              <span className="text-gradient">The Problem</span>
-            </h2>
-            <p className="text-gray-400 mb-12">
-              Traditional certification platforms are opaque about ROI. Learners don't know what to expect.
-            </p>
-
-            <div className="grid md:grid-cols-3 gap-8">
-              {[
-                {
-                  icon: TrendingUp,
-                  title: 'No Stage-Based Salary Visibility',
-                  desc: 'Learners lack clarity on earning potential at each certification level',
-                },
-                {
-                  icon: Users,
-                  title: 'Hidden Recruiter Signals',
-                  desc: 'No transparency on how recruiters actually value specific certifications',
-                },
-                {
-                  icon: Zap,
-                  title: 'Unclear Career Path Impact',
-                  desc: 'Missing insights on job market demand and competitive advantages',
-                },
-              ].map((item, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: i * 0.1 }}
-                  viewport={{ once: true }}
-                  className="glass-effect p-8 rounded-lg"
-                >
-                  <item.icon className="w-10 h-10 text-red-400 mb-4" />
-                  <h3 className="text-xl font-bold mb-3">{item.title}</h3>
-                  <p className="text-gray-400">{item.desc}</p>
-                </motion.div>
-              ))}
-            </div>
+            <Users className="text-[#4DA3FF] mb-4" size={32} />
+            <h3 className="text-xl font-semibold text-[#F8FAFC] mb-3">Talent Database</h3>
+            <p className="text-[#B6C2D6]">Access a curated pool of cloud-skilled learners. Filter by track progress, skills, and specialization to find your perfect match.</p>
           </motion.div>
+
+          <motion.div
+            whileHover={{ y: -5 }}
+            className="bg-[#0F274A] rounded-lg p-8 border border-[rgba(255,255,255,0.08)]"
+          >
+            <Zap className="text-[#22C55E] mb-4" size={32} />
+            <h3 className="text-xl font-semibold text-[#F8FAFC] mb-3">AI Recommendations</h3>
+            <p className="text-[#B6C2D6]">Let AI rank and recommend top candidates based on job requirements and learner capabilities.</p>
+          </motion.div>
+        </div>
+
+        <div className="text-center">
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={handleLogin}
+            className="px-8 py-3 bg-[#22C55E] text-[#0B1E3B] rounded-lg font-semibold hover:bg-[#16a34a] transition"
+          >
+            Browse Talent →
+          </motion.button>
         </div>
       </section>
 
-      {/* The Solution Section */}
-      <section className="px-8 py-20 border-t border-white/10">
-        <div className="max-w-5xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-4xl font-bold mb-4">
-              <span className="text-gradient">The Solution</span>
-            </h2>
-            <p className="text-gray-400 mb-12">
-              CertiROI transforms certification providers' platforms into intelligence dashboards that drive engagement, completion, and career outcomes.
-            </p>
+      {/* How It Works */}
+      <section className="max-w-7xl mx-auto px-6 md:px-8 py-20 border-t border-[rgba(255,255,255,0.08)]">
+        <h2 className="text-4xl font-bold text-[#F8FAFC] mb-16 text-center">How It Works</h2>
+        <div className="grid md:grid-cols-3 gap-8">
+          <div className="text-center">
+            <div className="w-12 h-12 bg-[#4DA3FF] text-[#0B1E3B] rounded-full flex items-center justify-center font-bold text-lg mx-auto mb-4">1</div>
+            <h3 className="text-xl font-semibold text-[#F8FAFC] mb-2">Choose Your Track</h3>
+            <p className="text-[#B6C2D6]">Pick from 10 Company specializations (Cloud Developer, DevOps, Data Engineer, Security Specialist, ML Engineer etc.)</p>
+          </div>
 
-            <div className="grid md:grid-cols-2 gap-8">
-              {[
-                {
-                  icon: TrendingUp,
-                  title: 'Real Salary Progression Data',
-                  desc: 'Display actual salary ranges and growth trajectories per certification stage',
-                },
-                {
-                  icon: Users,
-                  title: 'Recruiter Demand Signals',
-                  desc: 'Show hiring trends, job openings, and recruiter interest by certification level',
-                },
-                {
-                  icon: Trophy,
-                  title: 'Performance Tier System',
-                  desc: 'Bronze, Silver, Gold tiers drive completion and learner engagement',
-                },
-                {
-                  icon: Zap,
-                  title: 'Provider Analytics Dashboard',
-                  desc: 'Track drop-off rates, ROI metrics, and talent pool insights in real-time',
-                },
-              ].map((item, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: i * 0.1 }}
-                  viewport={{ once: true }}
-                  className="glass-effect p-8 rounded-lg hover:bg-white/10 transition-all"
-                >
-                  <item.icon className="w-10 h-10 text-emerald-400 mb-4" />
-                  <h3 className="text-xl font-bold mb-3">{item.title}</h3>
-                  <p className="text-gray-400">{item.desc}</p>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
+          <div className="text-center">
+            <div className="w-12 h-12 bg-[#4DA3FF] text-[#0B1E3B] rounded-full flex items-center justify-center font-bold text-lg mx-auto mb-4">2</div>
+            <h3 className="text-xl font-semibold text-[#F8FAFC] mb-2">Complete Different Stages</h3>
+            <p className="text-[#B6C2D6]">Master each stage with courses, projects, and skills verification. See job pay range for each stage. Reach Advanced stages to become recruiter-visible.</p>
+          </div>
+
+          <div className="text-center">
+            <div className="w-12 h-12 bg-[#4DA3FF] text-[#0B1E3B] rounded-full flex items-center justify-center font-bold text-lg mx-auto mb-4">3</div>
+            <h3 className="text-xl font-semibold text-[#F8FAFC] mb-2">Get Hired</h3>
+            <p className="text-[#B6C2D6]">Connect with companies looking for your skills. Apply to matched jobs or receive direct recruiter outreach.</p>
+          </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="px-8 py-20 border-t border-white/10">
-        <div className="max-w-3xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
+      {/* Footer CTA */}
+      <section className="max-w-7xl mx-auto px-6 md:px-8 py-20 border-t border-[rgba(255,255,255,0.08)]">
+        <div className="text-center">
+          <h2 className="text-4xl font-bold text-[#F8FAFC] mb-6">Ready to Skill Up?</h2>
+          <p className="text-[#B6C2D6] mb-8 text-lg">Join SkillSprint today and turn your cloud learning into career opportunities.</p>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={handleLogin}
+            className="px-12 py-4 bg-[#4DA3FF] text-[#0B1E3B] rounded-lg font-semibold hover:bg-[#3d8ae6] transition text-lg"
           >
-            <h2 className="text-4xl font-bold mb-6">Ready to Transform Your Certification Pathway?</h2>
-            <p className="text-gray-400 mb-12">
-              See how AWS uses CertiROI to drive learner engagement and career outcomes.
-            </p>
-
-            <Link to="/provider/dashboard">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 rounded-lg bg-gradient-to-r from-cyan-500 to-indigo-500 text-white font-bold inline-flex items-center gap-2 hover:shadow-lg hover:shadow-cyan-500/50 transition-all"
-              >
-                Launch Demo <ArrowRight className="w-5 h-5" />
-              </motion.button>
-            </Link>
-          </motion.div>
+            Get Started Free → 
+          </motion.button>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="px-8 py-12 border-t border-white/10 text-center text-gray-500">
-        <p>CertiROI © 2026 • Demo Version • No Real Data</p>
+      <footer id="contact" className="border-t border-[rgba(255,255,255,0.08)] mt-20 py-8">
+        <div className="max-w-7xl mx-auto px-6 md:px-8 text-center text-[#B6C2D6]">
+          <p>© 2024 SkillSprint. Turning learning into opportunities.</p>
+        </div>
       </footer>
     </div>
   );

@@ -2,8 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --navy: #0B1E3B;
+  --surface: #0F274A;
+  --light-blue: #4DA3FF;
+  --green: #22C55E;
+  --text: #F8FAFC;
+  --muted: #B6C2D6;
+  --border: rgba(255, 255, 255, 0.08);
+}
+
 body {
-  @apply bg-[#0b0f19] text-white;
+  @apply bg-[#0B1E3B] text-[#F8FAFC];
   font-family: 'Inter', sans-serif;
 }
 
@@ -14,30 +24,46 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: rgba(15, 39, 74, 0.5);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgb(55 65 81);
+  background: #4DA3FF;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgb(71 85 105);
+  background: #3d8ae6;
 }
 
 .glass-effect {
-  @apply backdrop-blur-md bg-white/5 border border-white/10;
+  @apply border border-[rgba(255,255,255,0.08)] bg-[#0F274A]/70 backdrop-blur-sm;
 }
 
-.career-gradient {
-  @apply bg-gradient-to-r from-cyan-400 to-indigo-500;
+.btn-primary {
+  @apply bg-[#4DA3FF] text-[#0B1E3B] hover:bg-[#3d8ae6] transition font-semibold;
 }
 
-.economic-gradient {
-  @apply bg-gradient-to-r from-emerald-400 to-cyan-400;
+.btn-secondary {
+  @apply bg-transparent text-[#4DA3FF] border border-[#4DA3FF] hover:bg-[#4DA3FF]/10 transition font-semibold;
 }
 
-.text-gradient {
-  @apply bg-gradient-to-r from-cyan-400 to-indigo-500 bg-clip-text text-transparent;
+.btn-success {
+  @apply bg-[#22C55E] text-[#0B1E3B] hover:bg-[#16a34a] transition font-semibold;
+}
+
+.badge-risk-high {
+  @apply bg-red-900/50 text-red-300 border border-red-700/50;
+}
+
+.badge-risk-medium {
+  @apply bg-yellow-900/50 text-yellow-300 border border-yellow-700/50;
+}
+
+.badge-risk-low {
+  @apply bg-[#22C55E]/20 text-[#22C55E] border border-[#22C55E]/50;
+}
+
+.text-accent {
+  @apply text-[#4DA3FF];
 }

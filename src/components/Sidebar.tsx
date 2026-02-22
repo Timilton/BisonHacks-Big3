@@ -1,24 +1,28 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import {
-  LayoutDashboard,
-  Layers,
-  Users,
-  BarChart3,
-  ChevronRight,
-  Trophy,
-} from 'lucide-react';
+import { ChevronRight, BookOpen, User, Inbox, Briefcase, Zap, Users, GraduationCap } from 'lucide-react';
+import { useAppContext } from '../store/AppContext';
 
 export const Sidebar: React.FC = () => {
   const location = useLocation();
+  const { role } = useAppContext();
 
-  const navItems = [
-    { path: '/provider/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
-    { path: '/provider/pathways', icon: Layers, label: 'Pathways' },
-    { path: '/provider/talent', icon: Users, label: 'Talent Pool' },
-    { path: '/provider/analytics', icon: BarChart3, label: 'Analytics' },
+  const learnerNavItems = [
+    { path: '/learner/tracks', icon: GraduationCap, label: 'Tracks' },
+    { path: '/learner/courses', icon: BookOpen, label: 'Courses' },
+    { path: '/learner/job-center', icon: Briefcase, label: 'Job Center' },
+    { path: '/learner/skills-profile', icon: User, label: 'Skills Profile' },
+    { path: '/learner/mentor', icon: Zap, label: 'MentorMe' },
+    { path: '/learner/inbox', icon: Inbox, label: 'Inbox' },
   ];
+
+  const companyNavItems = [
+    { path: '/company/learner-database', icon: Users, label: 'Learner Database' },
+    { path: '/company/job-center', icon: Briefcase, label: 'Job Center' },
+  ];
+
+  const navItems = role === 'learner' ? learnerNavItems : companyNavItems;
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -27,24 +31,15 @@ export const Sidebar: React.FC = () => {
       initial={{ x: -100, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       transition={{ duration: 0.3 }}
-      className="fixed left-0 top-0 h-screen w-64 glass-effect border-r border-white/10 p-6 overflow-y-auto hidden lg:flex flex-col bg-[#0a0e17]"
+      className="fixed left-0 top-16 h-screen w-64 bg-[#0F274A] border-r border-[rgba(255,255,255,0.08)] p-6 overflow-y-auto hidden lg:flex flex-col"
     >
-      {/* Logo */}
-      <Link to="/" className="flex items-center gap-3 mb-12">
-        <div className="p-2 rounded-lg bg-gradient-to-r from-cyan-500 to-indigo-500">
-          <Trophy className="w-6 h-6 text-white" />
-        </div>
-        <div>
-          <h1 className="font-bold text-lg text-gradient">CertiROI</h1>
-          <p className="text-xs text-gray-400">ROI Platform</p>
-        </div>
-      </Link>
+      {/* Section Title */}
+      <p className="text-xs text-[#B6C2D6] uppercase tracking-widest mb-4 px-2 font-semibold">
+        {role === 'learner' ? 'Learning' : 'Recruiting'}
+      </p>
 
       {/* Navigation */}
       <nav className="space-y-2 flex-1">
-        <p className="text-xs text-gray-500 uppercase tracking-widest mb-4 px-2">
-          Provider Dashboard
-        </p>
         {navItems.map((item) => {
           const Icon = item.icon;
           const active = isActive(item.path);
@@ -54,19 +49,13 @@ export const Sidebar: React.FC = () => {
                 whileHover={{ x: 4 }}
                 className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all ${
                   active
-                    ? 'bg-gradient-to-r from-cyan-500/20 to-indigo-500/20 border border-cyan-500/30'
-                    : 'hover:bg-white/5'
+                    ? 'bg-[#4DA3FF] text-[#0B1E3B] font-medium'
+                    : 'text-[#B6C2D6] hover:bg-[#0B1E3B]'
                 }`}
               >
-                <Icon
-                  className={`w-5 h-5 ${
-                    active ? 'text-cyan-400' : 'text-gray-400'
-                  }`}
-                />
-                <span className={active ? 'text-cyan-400 font-medium' : 'text-gray-300'}>
-                  {item.label}
-                </span>
-                {active && <ChevronRight className="w-4 h-4 ml-auto text-cyan-400" />}
+                <Icon className={`w-5 h-5 ${active ? 'text-[#0B1E3B]' : 'text-[#4DA3FF]'}`} />
+                <span>{item.label}</span>
+                {active && <ChevronRight className="w-4 h-4 ml-auto" />}
               </motion.div>
             </Link>
           );
@@ -74,11 +63,10 @@ export const Sidebar: React.FC = () => {
       </nav>
 
       {/* Footer */}
-      <div className="border-t border-white/10 pt-4">
-        <div className="text-xs text-gray-500 p-2">
-          <p className="font-medium text-gray-400 mb-1">AWS Certification</p>
-          <p>Provider Edition</p>
-          <p className="mt-2 text-gray-600">Demo • No Real Data</p>
+      <div className="border-t border-[rgba(255,255,255,0.08)] pt-4">
+        <div className="text-xs text-[#B6C2D6] p-2">
+          <p className="font-medium text-[#F8FAFC] mb-1">SkillSprint Demo</p>
+          <p>No Real Data</p>
         </div>
       </div>
     </motion.div>
